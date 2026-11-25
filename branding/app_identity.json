@@ -4,11 +4,19 @@
   "created_for": "Granbell Financial Services",
   "creator_attribution": "Created by Silva Rosa Corporation for Granbell Financial Services.",
   "copyright": "© 2026 Silva Rosa Corporation (DE USA 6615106)",
-  "source_artwork": "GranbellPQC.png supplied by the user; preserved without modification.",
-  "icons": {
-    "png": "branding/icons/OnRouteWay.png",
-    "windows_ico": "branding/icons/OnRouteWay.ico",
-    "macos_icns": "branding/icons/OnRouteWay.icns"
+  "edition_icons": {
+    "qdfs": {
+      "source_artwork": "GranbellPQC-1.png supplied by the user; preserved byte-for-byte.",
+      "png": "branding/icons/qdfs/GranbellPQC.png",
+      "windows_ico": "branding/icons/qdfs/GranbellPQC.ico",
+      "macos_icns": "branding/icons/qdfs/GranbellPQC.icns"
+    },
+    "private": {
+      "source_artwork": "ORW_Browser.png supplied by the user; preserved byte-for-byte.",
+      "png": "branding/icons/private/ORW_Browser.png",
+      "windows_ico": "branding/icons/private/ORW_Browser.ico",
+      "macos_icns": "branding/icons/private/ORW_Browser.icns"
+    }
   },
-  "native_application_integration": "Pending Chromium source checkout; these are prepared project assets, not yet embedded in a browser binary."
+  "native_application_integration": "Edition-specific project assets are prepared; Chromium source checkout is pending, so these icons are not yet embedded in a browser binary."
 }

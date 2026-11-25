@@ -6,10 +6,15 @@ product:
   copyright: "© 2026 Silva Rosa Corporation (DE USA 6615106)"
   help_locale: "en-GB"
   help_file: "global/ui_help.en-GB.json"
-  application_icon:
-    png: "branding/icons/OnRouteWay.png"
-    windows_ico: "branding/icons/OnRouteWay.ico"
-    macos_icns: "branding/icons/OnRouteWay.icns"
+  application_icons:
+    qdfs:
+      png: "branding/icons/qdfs/GranbellPQC.png"
+      windows_ico: "branding/icons/qdfs/GranbellPQC.ico"
+      macos_icns: "branding/icons/qdfs/GranbellPQC.icns"
+    private:
+      png: "branding/icons/private/ORW_Browser.png"
+      windows_ico: "branding/icons/private/ORW_Browser.ico"
+      macos_icns: "branding/icons/private/ORW_Browser.icns"
 
 address_bar:
   indicator_order: ["PQC", "QDFS"]

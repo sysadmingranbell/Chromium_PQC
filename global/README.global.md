@@ -7,7 +7,9 @@
 - Copyright: © 2026 Silva Rosa Corporation (DE USA 6615106)
 - Help locale: en-GB
 - Help/About configuration: `global/ui_help.en-GB.json`
-- Icon assets: `branding/icons/OnRouteWay.png`, `branding/icons/OnRouteWay.ico`, and `branding/icons/OnRouteWay.icns`
+- QDFS Edition icons: `branding/icons/qdfs/GranbellPQC.png`, `branding/icons/qdfs/GranbellPQC.ico`, and `branding/icons/qdfs/GranbellPQC.icns`
+- Private Edition icons: `branding/icons/private/ORW_Browser.png`, `branding/icons/private/ORW_Browser.ico`, and `branding/icons/private/ORW_Browser.icns`
+- Select the matching edition icon from `product.application_icons`; there is no shared default icon.
 
 ## Project status
 
