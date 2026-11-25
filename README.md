@@ -14,6 +14,10 @@ Project for a Chromium-based browser with PQC-aware connection reporting, QDFS n
 - The simulator's classification logic is covered by `docs/ui/address_bar_state_test.js`.
 - Windows and macOS builds are not produced by this workspace state.
 
+## Downloads
+
+The public download page is [OnRouteWay Downloads](https://sysadmingranbell.github.io/Chromium_PQC/downloads/). It lists published stable versions and separates Windows and macOS release assets; the canonical binaries are hosted in GitHub Releases. The page reports availability honestly—there are no installer builds yet.
+
 ## Address-bar indicator requirements
 
 The native browser UI is specified to show **[PQC] [QDFS]** beside the active origin. The colours are driven only by verified evidence. See `docs/ui/address_bar_icons.md` for state definitions, certificate-viewer behaviour, accessibility requirements and Chromium integration points.
