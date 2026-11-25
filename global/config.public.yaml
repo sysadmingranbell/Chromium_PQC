@@ -1,0 +1,30 @@
+# OnRouteWay public product and UI configuration
+
+product:
+  name: "OnRouteWay"
+  creator_attribution: "Created by Silva Rosa Corporation for Granbell Financial Services."
+  copyright: "© 2026 Silva Rosa Corporation (DE USA 6615106)"
+  help_locale: "en-GB"
+  help_file: "global/ui_help.en-GB.json"
+  application_icon:
+    png: "branding/icons/OnRouteWay.png"
+    windows_ico: "branding/icons/OnRouteWay.ico"
+    macos_icns: "branding/icons/OnRouteWay.icns"
+
+address_bar:
+  indicator_order: ["PQC", "QDFS"]
+  pqc_states:
+    blue: "validated_pqc_certificate"
+    green: "validated_tls_with_hybrid_key_exchange"
+    yellow: "authenticated_classical_tls"
+    red: "unencrypted_connection"
+    unknown: "neutral_do_not_infer_from_missing_evidence"
+  qdfs_states:
+    blue: "verified_qdfs_peer_and_ca_over_ipv6"
+    green: "verified_qdfs_peer_and_ca_over_ipv4"
+    yellow: "verified_qdfs_peer_without_validated_qdfs_ca_any_ip_family"
+    grey: "verified_outside_qdfs"
+    unknown: "neutral_do_not_infer_from_missing_evidence"
+  certificate_viewer: "show_only_when_a_real_active_connection_certificate_is_available"
+
+implementation_status: "Prototype only; native Chromium integration pending a populated source checkout."

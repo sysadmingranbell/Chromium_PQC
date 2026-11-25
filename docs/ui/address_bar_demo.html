@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulated OnRouteWay address-bar indicator prototype">
+  <title>OnRouteWay — address-bar prototype</title>
+  <style>
+    :root { color-scheme: light; font: 15px/1.5 Arial, sans-serif; color: #202124; background: #fff; }
+    * { box-sizing: border-box; }
+    body { max-width: 980px; margin: 0 auto; padding: 28px 20px 56px; }
+    h1 { font-size: 1.5rem; margin: 0 0 6px; }
+    h2 { font-size: 1.15rem; margin: 0 0 10px; }
+    h3 { font-size: 1rem; margin: 18px 0 6px; }
+    .brand { color: #5f6368; margin: 0 0 20px; }
+    .notice { border: 1px solid #b06000; border-left: 5px solid #b06000; background: #fff8e1; padding: 12px 14px; margin: 16px 0; }
+    .address-bar { border: 1px solid #dadce0; background: #f8f9fa; border-radius: 24px; min-height: 58px; display: flex; align-items: center; gap: 8px; padding: 6px 9px 6px 18px; box-shadow: 0 1px 3px #0002; }
+    .origin { flex: 1; min-width: 80px; color: #3c4043; overflow-wrap: anywhere; }
+    .indicator { min-width: 78px; border: 2px solid currentColor; border-radius: 20px; padding: 5px 11px; background: #fff; font-weight: 700; cursor: pointer; }
+    .indicator:hover, .indicator:focus-visible { outline: 3px solid #20212455; outline-offset: 2px; }
+    .blue { color: #1558b0; background-color: #e8f0fe; }
+    .green { color: #146c2e; background-color: #e6f4ea; }
+    .yellow { color: #765600; background-color: #fef7e0; }
+    .red { color: #a50e0e; background-color: #fce8e6; }
+    .gray { color: #4b5157; background-color: #eceff1; }
+    .neutral { color: #3c4043; background-color: #f1f3f4; }
+    .panel { border: 1px solid #dadce0; border-radius: 12px; padding: 18px; margin: 14px 0; background: #fff; box-shadow: 0 2px 8px #00000012; }
+    .panel[hidden] { display: none; }
+    .panel-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .state-chip { display: inline-block; border-radius: 14px; padding: 3px 9px; font-weight: 700; }
+    dl { display: grid; grid-template-columns: minmax(150px, 1fr) 2fr; gap: 5px 16px; margin: 12px 0; }
+    dt { font-weight: 700; }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    .controls { margin-top: 22px; padding: 18px; border: 1px solid #dadce0; border-radius: 12px; background: #f8f9fa; }
+    .control-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); gap: 14px; }
+    label { display: block; font-weight: 700; margin-bottom: 5px; }
+    select { width: 100%; padding: 9px; border: 1px solid #70757a; border-radius: 6px; background: #fff; font: inherit; }
+    button, a { font: inherit; }
+    .cert-action { padding: 8px 12px; border: 1px solid #70757a; border-radius: 6px; background: #fff; }
+    .cert-action:disabled { color: #5f6368; background: #f1f3f4; }
+    .help { margin-top: 30px; border-top: 1px solid #dadce0; padding-top: 20px; }
+    .footer { margin-top: 28px; color: #5f6368; font-size: .9rem; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (max-width: 520px) { body { padding: 18px 12px 36px; } .address-bar { gap: 4px; padding-left: 12px; } .indicator { min-width: auto; padding: 5px 8px; } dl { grid-template-columns: 1fr; } dd { margin-bottom: 8px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OnRouteWay</h1>
+    <p class="brand">Address-bar status prototype · © 2026 Silva Rosa Corporation (DE USA 6615106)</p>
+    <p><strong>Created by Silva Rosa Corporation for Granbell Financial Services.</strong></p>
+  </header>
+
+  <p class="notice"><strong>Prototype only:</strong> the controls below simulate evidence for demonstration. This page does not inspect a live TLS session, certificate, IP address, or QDFS peer. The Chromium source checkout is not present, so these are not native browser indicators.</p>
+
+  <section aria-label="Simulated browser address bar">
+    <div class="address-bar">
+      <span class="origin">https://example.invalid/</span>
+      <button id="pqcButton" class="indicator neutral" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pqcPanel" title="Simulated PQC connection status">[PQC]</button>
+      <button id="qdfsButton" class="indicator neutral" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="qdfsPanel" title="Simulated QDFS network status">[QDFS]</button>
+    </div>
+
+    <section id="pqcPanel" class="panel" role="dialog" aria-labelledby="pqcTitle" hidden>
+      <div class="panel-heading"><h2 id="pqcTitle">PQC connection details</h2><span id="pqcChip" class="state-chip neutral"></span></div>
+      <dl>
+        <dt>Classification</dt><dd id="pqcExplanation"></dd>
+        <dt>Encryption</dt><dd id="pqcEncryption"></dd>
+        <dt>Certificate signature/key</dt><dd id="pqcCertificate"></dd>
+        <dt>Negotiated key exchange</dt><dd id="pqcExchange"></dd>
+        <dt>Authentication</dt><dd id="pqcAuthentication"></dd>
+      </dl>
+      <button id="certificateButton" class="cert-action" type="button" disabled>View certificate — unavailable in this prototype</button>
+      <p id="certificateNote">A native build must enable this action only when Chromium provides the real certificate for the active connection.</p>
+    </section>
+
+    <section id="qdfsPanel" class="panel" role="dialog" aria-labelledby="qdfsTitle" hidden>
+      <div class="panel-heading"><h2 id="qdfsTitle">QDFS network details</h2><span id="qdfsChip" class="state-chip neutral"></span></div>
+      <dl>
+        <dt>Classification</dt><dd id="qdfsClassification"></dd>
+        <dt>Peer membership</dt><dd id="qdfsMembership"></dd>
+        <dt>QDFS CA</dt><dd id="qdfsCa"></dd>
+        <dt>IP family</dt><dd id="qdfsIpFamily"></dd>
+      </dl>
+      <p>Membership must come from verified QDFS peer/network evidence; an IP address, hostname, or generic IPFS connection alone is not sufficient.</p>
+    </section>
+  </section>
+
+  <section class="controls" aria-labelledby="simulationTitle">
+    <h2 id="simulationTitle">Simulation controls</h2>
+    <p>Choose a test case to preview the requested colours and explanations.</p>
+    <div class="control-grid">
+      <div>
+        <label for="pqcMode">PQC test state</label>
+        <select id="pqcMode">
+          <option value="pqc">Validated PQC certificate — blue</option>
+          <option value="hybrid">Hybrid key exchange — green</option>
+          <option value="classical">Classical TLS — yellow</option>
+          <option value="unencrypted">No encryption — red</option>
+          <option value="untrusted">TLS authentication failed — neutral; native warning remains</option>
+          <option value="unknown">Evidence unavailable — neutral</option>
+        </select>
+      </div>
+      <div>
+        <label for="qdfsMode">QDFS test state</label>
+        <select id="qdfsMode">
+          <option value="ipv6">Verified QDFS peer + CA + IPv6 — blue</option>
+          <option value="ipv4">Verified QDFS peer + CA + IPv4 — green</option>
+          <option value="no-ca6">Verified QDFS peer without validated CA + IPv6 — yellow</option>
+          <option value="no-ca4">Verified QDFS peer without validated CA + IPv4 — yellow</option>
+          <option value="outside">Outside QDFS — grey</option>
+          <option value="unknown">Evidence unavailable — neutral</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="help" aria-labelledby="helpTitle">
+    <h2 id="helpTitle">Help — OnRouteWay</h2>
+    <p><strong>Created by Silva Rosa Corporation for Granbell Financial Services.</strong></p>
+    <h3>What is PQC?</h3>
+    <p>Post-quantum cryptography (PQC) is cryptography designed to resist attacks by quantum computers as well as classical computers. No algorithm can be described as absolutely secure against every future attack. ML-DSA-65 is a digital-signature algorithm standardised in NIST FIPS 204; it is distinct from a TLS key-exchange algorithm. The PQC indicator reports properties verified for the current connection, not a general guarantee about a website.</p>
+    <h3>What is the QDFS network?</h3>
+    <p>QDFS is Silva Rosa Corporation's distributed network using IPFS peer connectivity. The QDFS indicator reports only verified peer membership, the network path's IP family and whether the QDFS CA validated the relevant certificate. An IPFS installation by itself does not prove QDFS membership.</p>
+    <h3>About OnRouteWay</h3>
+    <p>OnRouteWay is the product name for this browser project. Created by Silva Rosa Corporation for Granbell Financial Services. Copyright © 2026 Silva Rosa Corporation (DE USA 6615106). Upstream legal notices, external service names and source identifiers remain unchanged.</p>
+  </section>
+
+  <p class="footer">Interactive state logic is exercised by <code>address_bar_state_test.js</code>. This prototype contains no certificate PEM and no fabricated connection or network data.</p>
+
+  <script src="address_bar_state.js"></script>
+  <script>
+    'use strict';
+    const { classifyPqc, classifyQdfs } = window.ChromiumPqcAddressState;
+    const pqcButton = document.getElementById('pqcButton');
+    const qdfsButton = document.getElementById('qdfsButton');
+    const pqcPanel = document.getElementById('pqcPanel');
+    const qdfsPanel = document.getElementById('qdfsPanel');
+
+    const pqcInputs = {
+      pqc: { tlsActive: true, tlsAuthenticated: true, pqcCertificateValidated: true, hybridKeyExchange: false },
+      hybrid: { tlsActive: true, tlsAuthenticated: true, pqcCertificateValidated: false, hybridKeyExchange: true },
+      classical: { tlsActive: true, tlsAuthenticated: true, pqcCertificateValidated: false, hybridKeyExchange: false },
+      unencrypted: { tlsActive: false },
+      untrusted: { tlsActive: true, tlsAuthenticated: false },
+      unknown: null
+    };
+    const qdfsInputs = {
+      ipv6: { membership: 'member', qdfsCaValidated: true, ipFamily: 'ipv6' },
+      ipv4: { membership: 'member', qdfsCaValidated: true, ipFamily: 'ipv4' },
+      'no-ca6': { membership: 'member', qdfsCaValidated: false, ipFamily: 'ipv6' },
+      'no-ca4': { membership: 'member', qdfsCaValidated: false, ipFamily: 'ipv4' },
+      outside: { membership: 'outside', qdfsCaValidated: false, ipFamily: 'unknown' },
+      unknown: { membership: 'unknown', qdfsCaValidated: false, ipFamily: 'unknown' }
+    };
+
+    function setColour(element, colour) {
+      element.classList.remove('blue', 'green', 'yellow', 'red', 'gray', 'neutral');
+      element.classList.add(colour);
+    }
+    function updatePqc() {
+      const mode = document.getElementById('pqcMode').value;
+      const input = pqcInputs[mode];
+      const result = classifyPqc(input);
+      setColour(pqcButton, result.colour);
+      setColour(document.getElementById('pqcChip'), result.colour);
+      pqcButton.title = `Simulated: ${result.label}`;
+      document.getElementById('pqcChip').textContent = result.label;
+      document.getElementById('pqcExplanation').textContent = result.explanation;
+      document.getElementById('pqcEncryption').textContent = input ? (input.tlsActive ? 'TLS active (simulated)' : 'Not encrypted (simulated)') : 'Not available';
+      document.getElementById('pqcCertificate').textContent = mode === 'pqc' ? 'PQC certificate validated (simulated state only; no certificate data supplied)' : 'Not available in this test case';
+      document.getElementById('pqcExchange').textContent = mode === 'hybrid' ? 'Hybrid group (simulated state only; no live handshake data supplied)' : 'Not available in this test case';
+      document.getElementById('pqcAuthentication').textContent = mode === 'untrusted' ? 'Failed (simulated); preserve Chromium native warning' : (input ? (input.tlsActive ? 'Passed (simulated)' : 'Not applicable') : 'Not available');
+    }
+    function updateQdfs() {
+      const mode = document.getElementById('qdfsMode').value;
+      const input = qdfsInputs[mode];
+      const result = classifyQdfs(input);
+      setColour(qdfsButton, result.colour);
+      setColour(document.getElementById('qdfsChip'), result.colour);
+      qdfsButton.title = `Simulated: ${result.label}`;
+      document.getElementById('qdfsChip').textContent = result.label;
+      document.getElementById('qdfsClassification').textContent = result.label;
+      document.getElementById('qdfsMembership').textContent = input ? (input.membership === 'member' ? 'Verified QDFS member (simulated)' : input.membership === 'outside' ? 'Verified outside QDFS (simulated)' : 'Not enough evidence (simulated)') : 'Not available';
+      document.getElementById('qdfsCa').textContent = input ? (input.qdfsCaValidated ? 'Validated (simulated)' : 'Not validated (simulated)') : 'Not available';
+      document.getElementById('qdfsIpFamily').textContent = input ? input.ipFamily.toUpperCase() + ' (simulated)' : 'Not available';
+    }
+    function togglePanel(button, panel, otherButton, otherPanel) {
+      const open = panel.hidden;
+      panel.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+      otherPanel.hidden = true;
+      otherButton.setAttribute('aria-expanded', 'false');
+    }
+    pqcButton.addEventListener('click', () => togglePanel(pqcButton, pqcPanel, qdfsButton, qdfsPanel));
+    qdfsButton.addEventListener('click', () => togglePanel(qdfsButton, qdfsPanel, pqcButton, pqcPanel));
+    document.getElementById('pqcMode').addEventListener('change', updatePqc);
+    document.getElementById('qdfsMode').addEventListener('change', updateQdfs);
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        pqcPanel.hidden = true; qdfsPanel.hidden = true;
+        pqcButton.setAttribute('aria-expanded', 'false');
+        qdfsButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+    updatePqc();
+    updateQdfs();
+  </script>
+</body>
+</html>

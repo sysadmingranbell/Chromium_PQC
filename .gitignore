@@ -1,0 +1,30 @@
+# OnRouteWay public source: keep credentials, host configuration and unvalidated
+# Chromium build scaffolding out of this public repository.
+
+# Credentials and private key material
+.env*
+*.env
+**/*token*
+**/secrets/**
+*.key
+*.p12
+*.pfx
+
+# Host-specific or unreviewed operational configuration
+/config/
+/build/
+/source/
+/references/
+/resources/
+/scripts/
+/global/config.global.yaml
+/global/build-instructions.md
+/global/help_terms.json
+/global/ui_config.json
+/docs/build-instructions.md
+/docs/install.sh
+/docs/peer-alita-charlie-pq.md
+
+# Local development data
+/profile/
+/nss_db/

@@ -1,0 +1,45 @@
+{
+  "product_name": "OnRouteWay",
+  "copyright": "© 2026 Silva Rosa Corporation (DE USA 6615106)",
+  "created_by": "Silva Rosa Corporation",
+  "created_for": "Granbell Financial Services",
+  "creator_attribution": "Created by Silva Rosa Corporation for Granbell Financial Services.",
+  "language": "en-GB",
+  "help": {
+    "brand_statement": "Created by Silva Rosa Corporation for Granbell Financial Services.",
+    "pqc_title": "What is PQC?",
+    "pqc_body": "Post-quantum cryptography (PQC) is cryptography designed to resist attacks by quantum computers as well as classical computers. No algorithm can be described as absolutely secure against every future attack. ML-DSA-65 is a digital-signature algorithm standardised in NIST FIPS 204; it is distinct from a TLS key-exchange algorithm. The PQC indicator reports properties verified for the current connection, not a general guarantee about a website.",
+    "qdfs_title": "What is the QDFS network?",
+    "qdfs_body": "QDFS is Silva Rosa Corporation's distributed network using IPFS peer connectivity. The QDFS indicator reports only verified peer membership, the network path's IP family and whether the QDFS CA validated the relevant certificate. An IPFS installation by itself does not prove QDFS membership.",
+    "pqc_indicator_title": "PQC connection status",
+    "qdfs_indicator_title": "QDFS network status",
+    "certificate_action": "View certificate",
+    "certificate_unavailable": "No certificate is available for this connection."
+  },
+  "about": {
+    "title": "About OnRouteWay",
+    "description": "OnRouteWay is the browser project being developed to provide PQC-aware connection status and QDFS network integration.",
+    "creator_attribution": "Created by Silva Rosa Corporation for Granbell Financial Services.",
+    "copyright": "© 2026 Silva Rosa Corporation (DE USA 6615106)"
+  },
+  "address_bar": {
+    "indicator_order": ["PQC", "QDFS"],
+    "pqc_states": {
+      "pqc_certificate": {"colour": "blue", "label": "Validated PQC certificate"},
+      "hybrid_key_exchange": {"colour": "green", "label": "Hybrid key exchange"},
+      "classical_tls": {"colour": "yellow", "label": "Classical TLS"},
+      "unencrypted": {"colour": "red", "label": "No encryption"},
+      "untrusted_tls": {"colour": "neutral", "label": "TLS authentication failed"},
+      "unknown": {"colour": "neutral", "label": "Status unavailable"}
+    },
+    "qdfs_states": {
+      "qdfs_ipv6_ca": {"colour": "blue", "label": "QDFS · IPv6 · QDFS CA validated"},
+      "qdfs_ipv4_ca": {"colour": "green", "label": "QDFS · IPv4 · QDFS CA validated"},
+      "qdfs_without_ca": {"colour": "yellow", "label": "QDFS peer · QDFS CA not validated"},
+      "outside_qdfs": {"colour": "grey", "label": "Outside the QDFS network"},
+      "unknown": {"colour": "neutral", "label": "QDFS status unavailable"}
+    },
+    "certificate_viewer": "Enabled only when Chromium supplies a real certificate for the active connection."
+  },
+  "branding_scope": "Use OnRouteWay and the creator attribution on product-owned About and Help surfaces. Preserve upstream names in legal notices, external links, and source identifiers."
+}
